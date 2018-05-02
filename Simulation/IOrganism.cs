@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Simulation
 {
@@ -16,6 +12,6 @@ namespace Simulation
         List<IMuscle> Muscles { get; set; }
         List<IJoint> Joints { get; set; }
 
-        void Move(int x, int y, int z);
+        float Move(float x, float y, float z);
     }
 }
