@@ -1,10 +1,8 @@
-﻿using Eppy;
-
-namespace Simulation
+﻿namespace Simulation
 {
     public interface IJoint
     {
         int ID { get; set; }
-        Tuple<int, int> BonesID { get; set; } 
+        Pair<int, int> BonesID { get; set; } 
     }
 }

@@ -1,42 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
-using Eppy;
 
 namespace Simulation
 {
-    class Organism : IOrganism
+    class Organism : IOrganism //TODO: Add IOrganism interface to Organism
     {
-        public Tuple<float, float, float> CurrentPosition { get; set; }
-        public Tuple<float, float, float> MovementAbility { get; set; }
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public double Clock { get; set; }
-        public List<IBone> Bones { get; set; }
-        public List<IMuscle> Muscles { get; set; }
-        public List<IJoint> Joints { get; set; }
-        public Organism(int lid, Random random)
+        public double[] CurrentPosition { get; } // Current position of an organism in environment.
+        public double[] MovementAbility { get; } // Movement simulation
+        public byte[] Chromosome { get; } // Chromosome of an organism
+        public static int FeatureLength { get; } = 4;
+        public int ID { get; } // Unique ID of an organism
+        public double Clock { get; } // Internal clock of an organism
+        public Organism(int lid, Random random) //TODO: Delete random generator from constructor.
         {
-            // Assigning unique ID
-            ID = lid;
-            // Setting current position to 0
-            CurrentPosition = new Tuple<float, float, float>(0,0,0);
-            // Generating random movement ability
-            MovementAbility = new Tuple<float, float, float>((float) random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
-            Console.WriteLine("Movement Ability: (" + MovementAbility.Item1.ToString("n3") + ", " +
-                                                      MovementAbility.Item2.ToString("n3") + ", " +
-                                                      MovementAbility.Item3.ToString("n3") + ")");
+            Chromosome = new byte[12];
+            random.NextBytes(Chromosome);
+            ID = lid; // Assigning unique ID
+            CurrentPosition = new double[3] { 0, 0, 0 }; // Setting current position to 0
+            MovementAbility = new double[3] { random.NextDouble(), random.NextDouble(), random.NextDouble() }; // Generating random movement ability
+            Console.WriteLine("Movement Ability: (" + MovementAbility[0].ToString("n3") + ", " + MovementAbility[1].ToString("n3") + ", " + MovementAbility[2].ToString("n3") + ")");
         }
+        /// <summary>
+        /// Creates an Organism.
+        /// </summary>
+        /// <param name="ch">Chromosome byte array.</param>
+        /// <param name="lid">Unique ID of the organism.</param>
+        /// <param name="random">Temporary random generator reference.</param>
+        public Organism(byte[] ch, int lid, Random random) //TODO: Delete random generator from constructor.
+        {
+            Chromosome =  ch;
+            ID = lid; // Assigning unique ID
+            CurrentPosition = new double[3] { 0, 0, 0 }; // Setting current position to 0
+            MovementAbility = new double[3] { random.NextDouble(), random.NextDouble(), random.NextDouble() }; // Generating random movement ability
+            //Console.WriteLine("Movement Ability: (" + MovementAbility[0].ToString("n3") + ", " + MovementAbility[1].ToString("n3") + ", " + MovementAbility[2].ToString("n3") + ")");
+        }
+        /// <summary>
+        /// Performs a move in the target direction.
+        /// </summary>
+        /// <param name="x">Target x axis.</param>
+        /// <param name="y">Target y axis.</param>
+        /// <param name="z">Target z axis.</param>
+        /// <returns>Difference between target and organism position after movement.</returns>
         public float Move(float x, float y, float z)
         {
-            CurrentPosition = new Tuple<float, float, float>(CurrentPosition.Item1 + MovementAbility.Item1,
-                                                             CurrentPosition.Item2 + MovementAbility.Item2,
-                                                             CurrentPosition.Item3 + MovementAbility.Item3);
-            Console.WriteLine("Current Position: (" + CurrentPosition.Item1.ToString("n3") + ", " +
-                                                      CurrentPosition.Item2.ToString("n3") + ", " +
-                                                      CurrentPosition.Item3.ToString("n3") + ")");
-            float deltaX = x - CurrentPosition.Item1;
-            float deltaY = y - CurrentPosition.Item2;
-            float deltaZ = z - CurrentPosition.Item3;
+
+            CurrentPosition[0] = CurrentPosition[0] + MovementAbility[0];
+            CurrentPosition[1] = CurrentPosition[1] + MovementAbility[1];
+            CurrentPosition[2] = CurrentPosition[2] + MovementAbility[2];
+
+            //Console.WriteLine("Current Position: (" + CurrentPosition[0].ToString("n3") + ", " + CurrentPosition[1].ToString("n3") + ", " + CurrentPosition[2].ToString("n3") + ")");
+            double deltaX = x - CurrentPosition[0];
+            double deltaY = y - CurrentPosition[1];
+            double deltaZ = z - CurrentPosition[2];
             return (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
         }
     }

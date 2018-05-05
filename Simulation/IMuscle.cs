@@ -1,12 +1,10 @@
-﻿using Eppy;
-
-namespace Simulation
+﻿namespace Simulation
 {
     public interface IMuscle
     {
         int ID { get; set; }
         // first and second bone id
-        Tuple<MuscleAnchorPoint, MuscleAnchorPoint> AnchorPoints { get; set; }
+        Pair<MuscleAnchorPoint, MuscleAnchorPoint> AnchorPoints { get; set; }
         double MaxStrength { get; set; }
         double MinLength { get; set; }
         double InitLength { get; set; }
