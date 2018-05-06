@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Eppy;
 
 namespace Simulation
 {
@@ -12,7 +11,7 @@ namespace Simulation
         private int iterationLength;
         private int lastID = 0;
         private Tuple<int, int, int> target;
-        List<Tuple<IOrganism, float>> Organisms = new List<Tuple<IOrganism, float>>();
+        List<Tuple<IOrganism, float>> Organisms = new List<Tuple<IOrganism, float>>(); // DAFUQ
         public Simulator(int noo, int noi, int il, Tuple<int,int,int> t)
         {
             numberOfOrganisms = noo;
@@ -46,7 +45,7 @@ namespace Simulation
             float sum = 0.0f;
             for (var i = 0; i < orderedList.Count; i++)
             {
-                sum += (float)Math.Pow((double)orderedList[i].Item2,3);
+                sum += (float)Math.Pow((double)1/orderedList[i].Item2,3);
             }
             // Add to cumultive probability list new tuples with normalized second value
             float cumulative = 0.0f;
@@ -73,10 +72,10 @@ namespace Simulation
                 }
             }
 
-            //foreach (Tuple<IOrganism, float> t in Organisms)
-            //{
-            //    Console.WriteLine(t.Item1.ID.ToString());
-            //}
+            foreach (Tuple<IOrganism, float> t in Organisms)
+            {
+                Console.WriteLine(t.Item1.ID.ToString());
+            }
 
             // Offspring Production
 

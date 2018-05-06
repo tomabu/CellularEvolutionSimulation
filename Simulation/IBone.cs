@@ -9,7 +9,7 @@ namespace Simulation
         double Mass { get; set; }
         double Diameter { get; set; }
 
-        List<MuscleAnchorPoint> AnchorPoints { get; set; }
+        //List<MuscleAnchorPoint> AnchorPoints { get; set; }
         IJoint UpperJoint { get; set; }
         IJoint LowerJoint { get; set; }
     }
