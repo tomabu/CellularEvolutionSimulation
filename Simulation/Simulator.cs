@@ -31,13 +31,14 @@ namespace Simulation
 
         public void RunIteration()
         {
+
             // Fitness Determination - calculating score basing on difference between target and current position of organism after one iteration
             Console.WriteLine("STAGE 1 - Fitness Determination");
             for (var i = 0; i < Organisms.Count; i++)
             {
-                Organisms[i].Second = Math.Pow(1 /Organisms[i].First.Move(target[0], target[1], target[2]),5);
-                //Console.WriteLine(Organisms[i].First.ID + ": " + Organisms[i].Second.ToString("n20"));
-                Console.WriteLine(Organisms[i].First.ID.ToString() + "   " + BitConverter.ToString(Organisms[i].First.Chromosome));
+                Organisms[i].Second = Math.Pow(1 /Organisms[i].First.Move(target[0], target[1], target[2]),5); //Count the fitness score
+                //Console.WriteLine(Organisms[i].First.ID + ": " + Organisms[i].Second.ToString("n20")); //Display fitness score of an organism
+                Console.WriteLine(Organisms[i].First.ID.ToString() + "   " + BitConverter.ToString(Organisms[i].First.Chromosome)); //Display ID and Chromosome
             }
 
             // Parent Selection
@@ -100,15 +101,16 @@ namespace Simulation
             //Show ID's of organisms that were chosen
             foreach (Pair<IOrganism, double> t in Parents)
             {
-                Console.Write(t.First.ID.ToString()+"   ");
-                //Console.Write(t.Second + "   ");
-                Console.WriteLine(BitConverter.ToString(t.First.Chromosome));
+                Console.Write(t.First.ID.ToString()+"   "); //Display ID
+                //Console.Write(t.Second + "   "); //Display cumulative probability of the Organism
+                Console.WriteLine(BitConverter.ToString(t.First.Chromosome)); //Display Chromosome
             }
             // Offspring Production
             Console.WriteLine("STAGE 3 - OffSpring Production");
             List<Pair<IOrganism, double>> Offspring = new List<Pair<IOrganism, double>>();
             List<Pair<int, int>> Crossed = new List<Pair<int, int>>();
             int crossingsLeft = numberOfOrganisms/2;
+            // Choose Reproduction Pairs
             while (crossingsLeft > 0)
             {
                 double random = r.NextDouble();
@@ -137,7 +139,7 @@ namespace Simulation
                 }
             }
 
-            // Offspring Mutation
+            // Offspring Mutation (Mutations are rare)
             Console.WriteLine("STAGE 4 - OffSpring Mutation");
             int counter = numberOfMutations+1;
             while(--counter>0)
@@ -155,7 +157,13 @@ namespace Simulation
             Organisms.AddRange(Offspring);
 
         }
-
+        /// <summary>
+        /// Chromosome crossover function.
+        /// </summary>
+        /// <param name="O1">Organism 1</param>
+        /// <param name="O2">Organism 2</param>
+        /// <param name="r">Random generator reference</param>
+        /// <returns>Pair of Organisms</returns>
         public Pair<IOrganism,IOrganism> Crossover (IOrganism O1, IOrganism O2, Random r)
         {
             int random = r.Next(0, O1.Chromosome.Length);
@@ -171,6 +179,12 @@ namespace Simulation
             return new Pair<IOrganism, IOrganism>(new Organism(Chromosome1, ++lastID, r), new Organism(Chromosome2, ++lastID, r));
         }
 
+        /// <summary>
+        /// Mutating selected organism chormosome.
+        /// </summary>
+        /// <param name="o">Organism object</param>
+        /// <param name="r">Random generator reference</param>
+        /// <returns>Organism with mutated chromosome</returns>
         public IOrganism Mutation (IOrganism o, Random r)
         {
             var tmpChromosome = new BitArray(o.Chromosome);
@@ -186,6 +200,12 @@ namespace Simulation
             return numberOfIterations;
         }
 
+        /// <summary>
+        /// Counts the n-th root of a number
+        /// </summary>
+        /// <param name="A">Number</param>
+        /// <param name="n">Root degree</param>
+        /// <returns>N-th root of the number</returns>
         public static double NthRoot(double A, int n)
         {
             double _n = (double)n;
