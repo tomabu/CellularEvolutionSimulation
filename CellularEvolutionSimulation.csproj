@@ -101,6 +101,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Simulation\Pair.cs" />
     <Compile Include="Simulation\Simulator.cs" />
     <Compile Include="Simulation\Organism.cs" />
     <Compile Include="Simulation\IBone.cs" />
@@ -110,10 +111,6 @@
     <Compile Include="Simulation\IOrganism.cs" />
     <Compile Include="Simulation\MuscleAnchorPoint.cs" />
     <Compile Include="Simulation\Program.cs" />
-    <Compile Include="Simulation\TupleLib\Tuple.cs" />
-    <Compile Include="Simulation\TupleLib\Tuple2.cs" />
-    <Compile Include="Simulation\TupleLib\Tuple3.cs" />
-    <Compile Include="Simulation\TupleLib\Tuple4.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".git\objects\info\" />
