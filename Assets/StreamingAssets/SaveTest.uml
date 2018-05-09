@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <fileName>SaveTest</fileName>
+  <serializedTypes>
+    <string>UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</string>
+    <string>UnityEngine.Quaternion, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</string>
+  </serializedTypes>
+  <serializedData>
+    <DataContainer>
+      <key>position</key>
+      <value xsi:type="Vector3">
+        <x>-3.409</x>
+        <y>2.618</y>
+        <z>2.50159121</z>
+      </value>
+    </DataContainer>
+    <DataContainer>
+      <key>rotation</key>
+      <value xsi:type="Quaternion">
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+        <w>1</w>
+        <eulerAngles>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </eulerAngles>
+      </value>
+    </DataContainer>
+    <DataContainer>
+      <key>scale</key>
+      <value xsi:type="Vector3">
+        <x>5.602611</x>
+        <y>1.52406</y>
+        <z>1</z>
+      </value>
+    </DataContainer>
+  </serializedData>
+</SaveData>
