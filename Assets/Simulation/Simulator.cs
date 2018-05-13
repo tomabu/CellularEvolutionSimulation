@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Simulation
 {
@@ -13,7 +14,7 @@ namespace Simulation
         private int numberOfMutations;
         private int lastID = 0;
         private float[] target;
-        Random r;
+        System.Random r;
         List<Pair<Organism,double>> Organisms = new List<Pair<Organism,double>>();
         public Simulator(int noo, int noi, int il, float[] t)
         {
@@ -21,10 +22,11 @@ namespace Simulation
             numberOfIterations = noi;
             iterationLength = il;
             target = t;
-            r = new Random();
+            r = new System.Random();
             for (int i=0; i < numberOfOrganisms; i++)
             {
-                Organisms.Add(new Pair<Organism, double> (new Organism(++lastID, r), double.PositiveInfinity ));
+                byte[] chromosome = GenerateChromosome(r);
+                Organisms.Add(new Pair<Organism, double> (new Organism(++lastID, chromosome , r), double.PositiveInfinity ));
             }
             numberOfMutations = 1;//(int)0.02 * numberOfOrganisms * Organisms[0].First.Chromosome.Length;
         }
@@ -33,16 +35,16 @@ namespace Simulation
         {
 
             // Fitness Determination - calculating score basing on difference between target and current position of organism after one iteration
-            Console.WriteLine("STAGE 1 - Fitness Determination");
+            Debug.Log("STAGE 1 - Fitness Determination");
             for (var i = 0; i < Organisms.Count; i++)
             {
                 Organisms[i].Second = Math.Pow(1 /Organisms[i].First.Move(target[0], target[1], target[2]),5); //Count the fitness score
-                //Console.WriteLine(Organisms[i].First.ID + ": " + Organisms[i].Second.ToString("n20")); //Display fitness score of an organism
-                Console.WriteLine(Organisms[i].First.ID.ToString() + "   " + BitConverter.ToString(Organisms[i].First.Chromosome)); //Display ID and Chromosome
+                //Debug.Log(Organisms[i].First.ID + ": " + Organisms[i].Second.ToString("n20")); //Display fitness score of an organism
+                Debug.Log(Organisms[i].First.ID.ToString() + "   " + BitConverter.ToString(Organisms[i].First.Chromosome)); //Display ID and Chromosome
             }
 
             // Parent Selection
-            Console.WriteLine("STAGE 2 - Parent Selection");
+            Debug.Log("STAGE 2 - Parent Selection");
             // Create selection probability list with ordered data
             List<Pair<Organism, double>> ProbabilityList = new List<Pair<Organism, double>>();
             foreach(Pair<Organism,double> o in Organisms)
@@ -103,10 +105,10 @@ namespace Simulation
             {
                 Console.Write(t.First.ID.ToString()+"   "); //Display ID
                 //Console.Write(t.Second + "   "); //Display cumulative probability of the Organism
-                Console.WriteLine(BitConverter.ToString(t.First.Chromosome)); //Display Chromosome
+                Debug.Log(BitConverter.ToString(t.First.Chromosome)); //Display Chromosome
             }
             // Offspring Production
-            Console.WriteLine("STAGE 3 - OffSpring Production");
+            Debug.Log("STAGE 3 - OffSpring Production");
             List<Pair<Organism, double>> Offspring = new List<Pair<Organism, double>>();
             List<Pair<int, int>> Crossed = new List<Pair<int, int>>();
             int crossingsLeft = numberOfOrganisms/2;
@@ -140,23 +142,136 @@ namespace Simulation
             }
 
             // Offspring Mutation (Mutations are rare)
-            Console.WriteLine("STAGE 4 - OffSpring Mutation");
+            Debug.Log("STAGE 4 - OffSpring Mutation");
             int counter = numberOfMutations+1;
             while(--counter>0)
             {
                 int rnd = r.Next(0, Offspring.Count);
                 Organism o = Offspring[rnd].First;
-                Console.WriteLine(BitConverter.ToString(o.Chromosome));
+                Debug.Log(BitConverter.ToString(o.Chromosome));
                 Offspring.RemoveAt(rnd);                
                 Offspring.Add(new Pair<Organism, double>(Mutation(o, r), double.PositiveInfinity));
                 Organism o1 = Offspring.FirstOrDefault(i => (i.First.ID == o.ID)).First;
-                Console.WriteLine(BitConverter.ToString(o1.Chromosome));
+                Debug.Log(BitConverter.ToString(o1.Chromosome));
             }
 
             Organisms.Clear();
             Organisms.AddRange(Offspring);
 
         }
+
+        public static byte[] GenerateChromosome(System.Random random)
+        {
+            List<byte[]> IDs = new List<byte[]>();
+            List<Pair<int, int>> pairs = new List<Pair<int, int>>();
+            int lastID = 1;
+            System.IO.MemoryStream stream = new System.IO.MemoryStream();
+            int randomNumber = random.Next(2, 100);
+            //Console.WriteLine(randomNumber*82);
+            float[] lastPosition = new float[3] { 0.0f, 0.0f, 0.0f };
+            for (int i = 0; i < randomNumber; i++)
+            {
+                // HEADER (10 bytes)
+                // random IDs
+                double id1choice, id2choice;
+                int chosenID1 = 0, chosenID2 = 0;
+                bool firstType, secondType;
+                do
+                {
+                    id1choice = random.NextDouble();
+                    id2choice = random.NextDouble();
+                    chosenID1 = (id1choice > 0.85 && IDs.Count > 0) ? (int)Math.Floor(random.NextDouble() * IDs.Count) + 1 : lastID++;
+                    chosenID2 = (id2choice > 0.85 && IDs.Count > 0) ? (int)Math.Floor(random.NextDouble() * IDs.Count) + 1 : lastID;
+                } while ((chosenID1 == chosenID2) || pairs.Any(p => p.First == chosenID1 && p.Second == chosenID2 || p.First == chosenID2 && p.Second == chosenID1));
+                pairs.Add(new Pair<int, int>(chosenID1, chosenID2));
+
+                stream.Append(BitConverter.GetBytes(chosenID1)); //Id of second Joint (4 bytes)
+                firstType = random.Next(0, 2) == 1 ? true : false;
+                stream.Append(BitConverter.GetBytes(firstType)); //Type of joint (1 byte)
+                stream.Append(BitConverter.GetBytes(chosenID2)); //Id of second Joint (4 bytes)
+                secondType = random.Next(0, 2) == 1 ? true : false;
+                stream.Append(BitConverter.GetBytes(secondType)); //Type of joint (1 byte)
+
+
+                // BODY (72 bytes)
+                // First Joint
+                if (chosenID1 <= IDs.Count)
+                {
+                    stream.Append(IDs.ElementAt(chosenID1 - 1));
+                }
+                else
+                {
+                    System.IO.MemoryStream tmp = new System.IO.MemoryStream();
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 4 * random.NextDouble() - 1))); // Position x-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 4 * random.NextDouble()))); // Position y-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes(0.0f)); // Position z-axis (4 bytes)
+
+                    tmp.Append(BitConverter.GetBytes(0.0f)); // Rotation x-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes(0.0f)); // Rotation y-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(360 * random.NextDouble()))); // Rotation z-axis (4 bytes)
+                    byte[] tmpArray = tmp.ToArray();
+                    IDs.Add(tmpArray);
+                    stream.Append(tmpArray);
+                }
+                if (firstType)
+                {
+                    stream.Append(BitConverter.GetBytes(random.Next(10, 10000))); //Maximum Motor Force (4 bytes)
+                    stream.Append(BitConverter.GetBytes((float)(360 * random.NextDouble()))); // Lower Angle (!= Upper Angle) (4bytes)
+                    stream.Append(BitConverter.GetBytes((float)(360 * random.NextDouble()))); // Upper Angle (4bytes)
+                }
+                else
+                {
+                    stream.Append(BitConverter.GetBytes(0)); //Maximum Motor Force (4 bytes)
+                    stream.Append(BitConverter.GetBytes(0.0f)); // Lower Angle (!= Upper Angle) (4bytes)
+                    stream.Append(BitConverter.GetBytes(0.0f)); // Upper Angle (4bytes)
+                }
+
+                if (chosenID2 <= IDs.Count)
+                {
+                    stream.Append(IDs.ElementAt(chosenID2 - 1));
+                }
+                else
+                {
+                    System.IO.MemoryStream tmp = new System.IO.MemoryStream();
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 4 * random.NextDouble() - 1))); // Position x-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 4 * random.NextDouble()))); // Position y-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes(0.0f)); // Position z-axis (4 bytes)
+
+                    tmp.Append(BitConverter.GetBytes(0.0f)); // Rotation x-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes(0.0f)); // Rotation y-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(360 * random.NextDouble()))); // Rotation z-axis (4 bytes)
+                    byte[] tmpArray = tmp.ToArray();
+                    IDs.Add(tmpArray);
+                    stream.Append(tmpArray);
+                }
+
+                if (secondType)
+                {
+                    stream.Append(BitConverter.GetBytes(2210));//random.Next(10, 10000))); //Maximum Motor Force (4 bytes)
+                    float firstAngle = (float)(360 * random.NextDouble());
+                    float secondAngle = (float)(360 * random.NextDouble());
+                    if (firstAngle > secondAngle)
+                    {
+                        stream.Append(BitConverter.GetBytes(secondAngle)); // Lower Angle (4bytes)
+                        stream.Append(BitConverter.GetBytes(firstAngle));  // Upper Angle (4bytes)
+                    }
+                    else
+                    {
+                        stream.Append(BitConverter.GetBytes(firstAngle));  // Lower Angle (4bytes)
+                        stream.Append(BitConverter.GetBytes(secondAngle)); // Upper Angle (4bytes)
+                    }
+
+                }
+                else
+                {
+                    stream.Append(BitConverter.GetBytes(0)); //Maximum Motor Force (4 bytes)
+                    stream.Append(BitConverter.GetBytes(0.0f)); // Lower Angle (!= Upper Angle) (4bytes)
+                    stream.Append(BitConverter.GetBytes(0.0f)); // Upper Angle (4bytes)
+                }
+            }
+            return stream.ToArray();
+        }
+
         /// <summary>
         /// Chromosome crossover function.
         /// </summary>
@@ -164,19 +279,16 @@ namespace Simulation
         /// <param name="O2">Organism 2</param>
         /// <param name="r">Random generator reference</param>
         /// <returns>Pair of Organisms</returns>
-        public Pair<Organism,Organism> Crossover (Organism O1, Organism O2, Random r)
+        public Pair<Organism, Organism> Crossover(Organism O1, Organism O2, System.Random r)
         {
-            int random = r.Next(0, O1.Chromosome.Length);
-            byte[] Chromosome1 = new byte[O1.Chromosome.Length];
-            byte[] Chromosome2 = new byte[O2.Chromosome.Length];
-            O1.Chromosome.CopyTo(Chromosome1, 0);
-            O2.Chromosome.CopyTo(Chromosome2, 0);
-            byte[] tmp = new byte[Chromosome1.Length];
-            Chromosome1.Take(random).ToArray().CopyTo(tmp, 0);
-            Chromosome2.Skip(random).Take(Chromosome2.Length - random).ToArray().CopyTo(tmp, random);
-            Chromosome2.Take(random).ToArray().CopyTo(Chromosome1, 0);
-            tmp.CopyTo(Chromosome2, 0);
-            return new Pair<Organism, Organism>(new Organism(Chromosome1, ++lastID, r), new Organism(Chromosome2, ++lastID, r));
+            int random = (O1.Chromosome.Length < O2.Chromosome.Length) ? r.Next(0, O1.Chromosome.Length / 82) * 82 : r.Next(0, O2.Chromosome.Length / 82) * 82;
+            byte[] Chromosome1 = new byte[O2.Chromosome.Length];
+            byte[] Chromosome2 = new byte[O1.Chromosome.Length];
+            O1.Chromosome.Take(random).ToArray().CopyTo(Chromosome1, 0);
+            O2.Chromosome.Skip(random).Take(Chromosome2.Length - random).ToArray().CopyTo(Chromosome1, random);
+            O2.Chromosome.Take(random).ToArray().CopyTo(Chromosome2, 0);
+            O1.Chromosome.Skip(random).Take(Chromosome1.Length - random).ToArray().CopyTo(Chromosome2, random);
+            return new Pair<Organism, Organism>(new Organism(++lastID, Chromosome1, r), new Organism(++lastID, Chromosome2, r));
         }
 
         /// <summary>
@@ -185,14 +297,14 @@ namespace Simulation
         /// <param name="o">Organism object</param>
         /// <param name="r">Random generator reference</param>
         /// <returns>Organism with mutated chromosome</returns>
-        public Organism Mutation (Organism o, Random r)
+        public Organism Mutation (Organism o, System.Random r)
         {
             var tmpChromosome = new BitArray(o.Chromosome);
             int mut = r.Next(0, tmpChromosome.Length);
             tmpChromosome[mut] = !tmpChromosome[mut];
             byte[] newChromosome = new byte[tmpChromosome.Length / 8];
             tmpChromosome.CopyTo(newChromosome, 0);
-            return new Organism(newChromosome, o.ID, r);
+            return new Organism(o.ID, newChromosome, r);
         }
 
         public int GetNumberOfIterations()

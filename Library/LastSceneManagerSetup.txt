@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/humanoid.unity
+- path: Assets/SimulationTest.unity
   isLoaded: 1
   isActive: 1
