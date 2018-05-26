@@ -1,12 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
+using NLog;
 namespace Simulation
 {
     class Program : MonoBehaviour
     {
+        static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         void Start()
         {
+
             // Get simulation parameters
             Debug.Log("Number of organisms in Population: ");
             int numberofOrganisms = 12; // Convert.ToInt32(Console.ReadLine());
@@ -21,11 +24,13 @@ namespace Simulation
             int counter = 0;
             while (counter <= Sim.GetNumberOfIterations())
             {
-                Debug.Log("Running Iteration " + counter++);
+                logger.Info("Running Iteration " + counter++);
+                //Debug.Log("Running Iteration " + counter++);
                 Sim.RunIteration();
                 //Sim.LogChanges();
             }
-            Debug.Log("Simulation completed!");
+            logger.Info("Simulation completed!");
+            //Debug.Log("Simulation completed!");
             Console.ReadKey();
         }
     }

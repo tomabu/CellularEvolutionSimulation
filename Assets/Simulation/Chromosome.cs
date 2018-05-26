@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ConsoleApp1
+namespace Simulation
 {
     class Chromosome
     {

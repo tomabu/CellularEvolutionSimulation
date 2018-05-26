@@ -24,15 +24,24 @@ public class Organism { // : MonoBehaviour
         Debug.Log("Movement Ability: (" + MovementAbility[0].ToString("n3") + ", " + MovementAbility[1].ToString("n3") + ", " + MovementAbility[2].ToString("n3") + ")");
     }
 
- //   // Use this for initialization
- //   void Start () {
-        
-	//}
-	
-	//// Update is called once per frame
-	//void Update () {
-		
-	//}
+    public Organism(int in_id, byte[] in_chromosome, double[] in_cp, double[] in_ma)
+    {
+        ID = in_id;
+        Chromosome = in_chromosome;
+        CurrentPosition = in_cp;
+        MovementAbility = in_ma;
+        Debug.Log("[" + ID + "]" + "Movement Ability: (" + MovementAbility[0].ToString("n3") + ", " + MovementAbility[1].ToString("n3") + ", " + MovementAbility[2].ToString("n3") + ")");
+    }
+
+    //   // Use this for initialization
+    //   void Start () {
+
+    //}
+
+    //// Update is called once per frame
+    //void Update () {
+
+    //}
 
     // For testing purposes only
     public float Move(float x, float y, float z)
