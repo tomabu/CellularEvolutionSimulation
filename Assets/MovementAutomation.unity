@@ -246,7 +246,7 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.01, y: 0.58}
-  m_ConnectedAnchor: {x: -0.27011493, y: -0.9318916}
+  m_ConnectedAnchor: {x: -0.26068035, y: -0.87946266}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &285842000
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9ea438992e75949b964091a0432a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelToLoad: Model001
+  modelToLoad: 
 --- !u!1 &872569323
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,8 +859,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1184560308}
   m_LocalRotation: {x: -0, y: -0, z: 0.08640905, w: -0.99625975}
-  m_LocalPosition: {x: 0.55, y: 2.65, z: 9.99228}
-  m_LocalScale: {x: 0.2889412, y: 2.25, z: 1}
+  m_LocalPosition: {x: 0.377, y: 1.688, z: 9.99228}
+  m_LocalScale: {x: 0.29205358, y: 1.2727654, z: 1}
   m_Children: []
   m_Father: {fileID: 1592002501}
   m_RootOrder: 2

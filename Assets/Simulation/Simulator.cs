@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace Simulation
 {
@@ -16,6 +19,7 @@ namespace Simulation
         private float[] target;
         System.Random r;
         List<Pair<Organism,double>> Organisms = new List<Pair<Organism,double>>();
+        //NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public Simulator(int noo, int noi, int il, float[] t)
         {
             numberOfOrganisms = noo;
@@ -35,16 +39,21 @@ namespace Simulation
         {
 
             // Fitness Determination - calculating score basing on difference between target and current position of organism after one iteration
-            Debug.Log("STAGE 1 - Fitness Determination");
+            //logger.Info("STAGE 1 - Fitness Determination");
+            //Debug.Log("STAGE 1 - Fitness Determination");
             for (var i = 0; i < Organisms.Count; i++)
             {
                 Organisms[i].Second = Math.Pow(1 /Organisms[i].First.Move(target[0], target[1], target[2]),5); //Count the fitness score
                 //Debug.Log(Organisms[i].First.ID + ": " + Organisms[i].Second.ToString("n20")); //Display fitness score of an organism
                 Debug.Log(Organisms[i].First.ID.ToString() + "   " + BitConverter.ToString(Organisms[i].First.Chromosome)); //Display ID and Chromosome
             }
-
+            foreach (Pair<Organism, double> o in Organisms)
+            {
+                //logger.Info("ID: " + o.First.ID + "    Fitness Score: " + o.Second.ToString());
+            }
             // Parent Selection
-            Debug.Log("STAGE 2 - Parent Selection");
+            //logger.Info("STAGE 2 - Parent Selection");
+            // Debug.Log("STAGE 2 - Parent Selection");
             // Create selection probability list with ordered data
             List<Pair<Organism, double>> ProbabilityList = new List<Pair<Organism, double>>();
             foreach(Pair<Organism,double> o in Organisms)
@@ -99,16 +108,15 @@ namespace Simulation
                 tmp += Parents[i].Second / sum;
                 Parents[i].Second = tmp;
             }
-
+            //logger.Info("IDs of chosen organisms: ");
             //Show ID's of organisms that were chosen
             foreach (Pair<Organism, double> t in Parents)
             {
-                Console.Write(t.First.ID.ToString()+"   "); //Display ID
-                //Console.Write(t.Second + "   "); //Display cumulative probability of the Organism
-                Debug.Log(BitConverter.ToString(t.First.Chromosome)); //Display Chromosome
+                //logger.Info(t.First.ID + "   ");
             }
             // Offspring Production
-            Debug.Log("STAGE 3 - OffSpring Production");
+            //logger.Info("STAGE 3 - OffSpring Production");
+            //Debug.Log("STAGE 3 - OffSpring Production");
             List<Pair<Organism, double>> Offspring = new List<Pair<Organism, double>>();
             List<Pair<int, int>> Crossed = new List<Pair<int, int>>();
             int crossingsLeft = numberOfOrganisms/2;
@@ -133,6 +141,7 @@ namespace Simulation
                 if(Crossed.Count>0) foundItem = Crossed.FirstOrDefault(i => (i.First == tmp1.ID && i.Second == tmp2.ID) || (i.First == tmp2.ID && i.Second == tmp1.ID));
                 if (tmp1 != null && tmp2 != null && tmp1 != tmp2 && foundItem == null)
                 {
+                    //logger.Info("Crossing organisms {0} and {1}", tmp1.ID, tmp2.ID);
                     Pair<Organism, Organism> crossedPair = Crossover(tmp1, tmp2, r);
                     Offspring.Add(new Pair<Organism, double>(crossedPair.First, double.PositiveInfinity));
                     Offspring.Add(new Pair<Organism, double>(crossedPair.Second, double.PositiveInfinity));
@@ -142,13 +151,15 @@ namespace Simulation
             }
 
             // Offspring Mutation (Mutations are rare)
-            Debug.Log("STAGE 4 - OffSpring Mutation");
+            //logger.Info("STAGE 4 - OffSpring Mutation");
+            //Debug.Log("STAGE 4 - OffSpring Mutation");
             int counter = numberOfMutations+1;
             while(--counter>0)
             {
                 int rnd = r.Next(0, Offspring.Count);
                 Organism o = Offspring[rnd].First;
                 Debug.Log(BitConverter.ToString(o.Chromosome));
+                //logger.Info("Mutation of organism " + o.ID + " performed!");
                 Offspring.RemoveAt(rnd);                
                 Offspring.Add(new Pair<Organism, double>(Mutation(o, r), double.PositiveInfinity));
                 Organism o1 = Offspring.FirstOrDefault(i => (i.First.ID == o.ID)).First;
@@ -331,6 +342,42 @@ namespace Simulation
 
             }
             return x[0];
+        }
+
+        public void SaveOrganisms(int iteration)
+        {
+            List<Organism> organismList = new List<Organism>();
+            foreach (Pair<Organism, double> o in Organisms)
+            {
+                organismList.Add(o.First);
+            }
+            string jsonString = JsonConvert.SerializeObject(organismList, Formatting.Indented);
+            string path = @".\organisms";
+            Directory.CreateDirectory(path);
+            string filePath = path + @"\iteration_" + iteration.ToString() + ".txt";
+            File.WriteAllText(filePath, jsonString);
+        }
+
+        public void LoadOrganisms(int iteration)
+        {
+            string path = @".\organisms\iteration_" + iteration.ToString() + ".txt";
+            string jsonString = File.ReadAllText(path);
+            Organisms.Clear();
+            var jsonobject = (JArray)JsonConvert.DeserializeObject(jsonString);
+            foreach (var o in jsonobject.Children())
+            {
+                int ID = (int)o["ID"];
+                byte[] chromosome = (byte[])o["Chromosome"];
+                var cp = o["CurrentPosition"];
+                double[] currentPosition = new double[] { (double)cp[0], (double)cp[1], (double)cp[2] };
+                var ma = o["MovementAbility"];
+                double[] movementAbility = new double[] { (double)ma[0], (double)ma[1], (double)ma[2] };
+                Organisms.Add(new Pair<Organism, double>(new Organism(ID, chromosome, currentPosition, movementAbility), double.PositiveInfinity));
+            }
+            foreach (Pair<Organism, double> o in Organisms)
+            {
+                Console.WriteLine("[" + o.First.ID + "]" + "Movement Ability: (" + o.First.MovementAbility[0].ToString("n3") + ", " + o.First.MovementAbility[1].ToString("n3") + ", " + o.First.MovementAbility[2].ToString("n3") + ")");
+            }
         }
 
     }

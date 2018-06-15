@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellularEvolutionSimulation", "CellularEvolutionSimulation.csproj", "{FB0CB46E-14AC-FF1D-A603-C1A5F943B97D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellularEvolutionSimulation", "Assembly-CSharp.csproj", "{6352A553-07BC-BC51-4C59-C3F077F2016F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB0CB46E-14AC-FF1D-A603-C1A5F943B97D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB0CB46E-14AC-FF1D-A603-C1A5F943B97D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB0CB46E-14AC-FF1D-A603-C1A5F943B97D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB0CB46E-14AC-FF1D-A603-C1A5F943B97D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6352A553-07BC-BC51-4C59-C3F077F2016F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6352A553-07BC-BC51-4C59-C3F077F2016F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6352A553-07BC-BC51-4C59-C3F077F2016F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6352A553-07BC-BC51-4C59-C3F077F2016F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

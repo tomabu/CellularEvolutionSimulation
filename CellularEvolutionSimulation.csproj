@@ -266,6 +266,7 @@
     <Compile Include="Assets\Simulation\MemoryStreamExtension.cs" />
     <Compile Include="Assets\Simulation\Organism.cs" />
     <Compile Include="Assets\Simulation\Organism1.cs" />
+    <Compile Include="Assets\Simulation\OrganismFactory.cs" />
     <Compile Include="Assets\Simulation\Pair.cs" />
     <Compile Include="Assets\Simulation\Program.cs" />
     <Compile Include="Assets\Simulation\Simulator.cs" />
