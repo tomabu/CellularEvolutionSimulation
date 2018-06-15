@@ -258,6 +258,7 @@
   <ItemGroup>
     <Compile Include="Assets\SaveData\Example\SaveDataExample.cs" />
     <Compile Include="Assets\SaveData\SaveData.cs" />
+    <Compile Include="Assets\Scripts\FromChromosome.cs" />
     <Compile Include="Assets\Scripts\LoadObject.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
@@ -265,6 +266,8 @@
     <Compile Include="Assets\Scripts\SaveObject.cs" />
     <Compile Include="Assets\Scripts\Startup.cs" />
     <Compile Include="Assets\Scripts\Terain.cs" />
+    <Compile Include="Assets\Simulation\Chromosome.cs" />
+    <Compile Include="Assets\Simulation\MemoryStreamExtension.cs" />
     <Compile Include="Assets\Simulation\Organism.cs" />
     <Compile Include="Assets\Simulation\Organism1.cs" />
     <Compile Include="Assets\Simulation\Pair.cs" />

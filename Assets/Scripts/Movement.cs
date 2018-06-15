@@ -44,8 +44,8 @@ public class Movement : MonoBehaviour
         if (!preUpdateComplete)
         {
             preUpdateComplete = true;
-            var model = GameObject.FindGameObjectWithTag("Organism");
-            ObjectSerializer.SaveOrganism(model);
+            //var model = GameObject.FindGameObjectWithTag("Organism");
+            //ObjectSerializer.SaveOrganism(model);
         }
     }
 
