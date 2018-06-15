@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
 using System.IO;
 
 namespace Simulation
@@ -20,7 +19,7 @@ namespace Simulation
         private float[] target;
         System.Random r;
         List<Pair<Organism,double>> Organisms = new List<Pair<Organism,double>>();
-        NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        //NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public Simulator(int noo, int noi, int il, float[] t)
         {
             numberOfOrganisms = noo;
@@ -40,7 +39,7 @@ namespace Simulation
         {
 
             // Fitness Determination - calculating score basing on difference between target and current position of organism after one iteration
-            logger.Info("STAGE 1 - Fitness Determination");
+            //logger.Info("STAGE 1 - Fitness Determination");
             //Debug.Log("STAGE 1 - Fitness Determination");
             for (var i = 0; i < Organisms.Count; i++)
             {
@@ -50,10 +49,10 @@ namespace Simulation
             }
             foreach (Pair<Organism, double> o in Organisms)
             {
-                logger.Info("ID: " + o.First.ID + "    Fitness Score: " + o.Second.ToString());
+                //logger.Info("ID: " + o.First.ID + "    Fitness Score: " + o.Second.ToString());
             }
             // Parent Selection
-            logger.Info("STAGE 2 - Parent Selection");
+            //logger.Info("STAGE 2 - Parent Selection");
             // Debug.Log("STAGE 2 - Parent Selection");
             // Create selection probability list with ordered data
             List<Pair<Organism, double>> ProbabilityList = new List<Pair<Organism, double>>();
@@ -109,14 +108,14 @@ namespace Simulation
                 tmp += Parents[i].Second / sum;
                 Parents[i].Second = tmp;
             }
-            logger.Info("IDs of chosen organisms: ");
+            //logger.Info("IDs of chosen organisms: ");
             //Show ID's of organisms that were chosen
             foreach (Pair<Organism, double> t in Parents)
             {
-                logger.Info(t.First.ID + "   ");
+                //logger.Info(t.First.ID + "   ");
             }
             // Offspring Production
-            logger.Info("STAGE 3 - OffSpring Production");
+            //logger.Info("STAGE 3 - OffSpring Production");
             //Debug.Log("STAGE 3 - OffSpring Production");
             List<Pair<Organism, double>> Offspring = new List<Pair<Organism, double>>();
             List<Pair<int, int>> Crossed = new List<Pair<int, int>>();
@@ -142,7 +141,7 @@ namespace Simulation
                 if(Crossed.Count>0) foundItem = Crossed.FirstOrDefault(i => (i.First == tmp1.ID && i.Second == tmp2.ID) || (i.First == tmp2.ID && i.Second == tmp1.ID));
                 if (tmp1 != null && tmp2 != null && tmp1 != tmp2 && foundItem == null)
                 {
-                    logger.Info("Crossing organisms {0} and {1}", tmp1.ID, tmp2.ID);
+                    //logger.Info("Crossing organisms {0} and {1}", tmp1.ID, tmp2.ID);
                     Pair<Organism, Organism> crossedPair = Crossover(tmp1, tmp2, r);
                     Offspring.Add(new Pair<Organism, double>(crossedPair.First, double.PositiveInfinity));
                     Offspring.Add(new Pair<Organism, double>(crossedPair.Second, double.PositiveInfinity));
@@ -152,7 +151,7 @@ namespace Simulation
             }
 
             // Offspring Mutation (Mutations are rare)
-            logger.Info("STAGE 4 - OffSpring Mutation");
+            //logger.Info("STAGE 4 - OffSpring Mutation");
             //Debug.Log("STAGE 4 - OffSpring Mutation");
             int counter = numberOfMutations+1;
             while(--counter>0)
@@ -160,7 +159,7 @@ namespace Simulation
                 int rnd = r.Next(0, Offspring.Count);
                 Organism o = Offspring[rnd].First;
                 Debug.Log(BitConverter.ToString(o.Chromosome));
-                logger.Info("Mutation of organism " + o.ID + " performed!");
+                //logger.Info("Mutation of organism " + o.ID + " performed!");
                 Offspring.RemoveAt(rnd);                
                 Offspring.Add(new Pair<Organism, double>(Mutation(o, r), double.PositiveInfinity));
                 Organism o1 = Offspring.FirstOrDefault(i => (i.First.ID == o.ID)).First;

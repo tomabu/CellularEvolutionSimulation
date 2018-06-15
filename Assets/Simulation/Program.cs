@@ -1,12 +1,11 @@
 ﻿using System;
 using UnityEngine;
-
 using NLog;
 namespace Simulation
 {
     class Program : MonoBehaviour
     {
-        static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        //static NLog.Logger logger = LogManager.GetCurrentClassLogger();
         void Start()
         {
 
@@ -24,12 +23,12 @@ namespace Simulation
             int counter = 0;
             while (counter <= Sim.GetNumberOfIterations())
             {
-                logger.Info("Running Iteration " + counter++);
+                //logger.Info("Running Iteration " + counter++);
                 //Debug.Log("Running Iteration " + counter++);
                 Sim.RunIteration();
                 //Sim.LogChanges();
             }
-            logger.Info("Simulation completed!");
+            //logger.Info("Simulation completed!");
             //Debug.Log("Simulation completed!");
             Console.ReadKey();
         }
