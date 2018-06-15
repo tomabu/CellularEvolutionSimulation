@@ -61,6 +61,7 @@
     <Compile Include="Assets\SaveData\Example\SaveDataExample.cs" />
     <Compile Include="Assets\SaveData\SaveData.cs" />
     <Compile Include="Assets\Scripts\CreateAndAdd.cs" />
+    <Compile Include="Assets\Scripts\FromChromosome.cs" />
     <Compile Include="Assets\Scripts\LoadObject.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />

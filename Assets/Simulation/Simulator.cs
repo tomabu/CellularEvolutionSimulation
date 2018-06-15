@@ -175,6 +175,7 @@ namespace Simulation
         {
             List<byte[]> IDs = new List<byte[]>();
             List<Pair<int, int>> pairs = new List<Pair<int, int>>();
+            bool inc = false;
             int lastID = 1;
             System.IO.MemoryStream stream = new System.IO.MemoryStream();
             int randomNumber = random.Next(2, 10);
@@ -191,8 +192,28 @@ namespace Simulation
                 {
                     id1choice = random.NextDouble();
                     id2choice = random.NextDouble();
-                    chosenID1 = (id1choice > 0.85 && IDs.Count > 0) ? (int)Math.Floor(random.NextDouble() * IDs.Count) + 1 : lastID++;
-                    chosenID2 = (id2choice > 0.85 && IDs.Count > 0) ? (int)Math.Floor(random.NextDouble() * IDs.Count) + 1 : lastID;
+                    if (id1choice > 0.85 && IDs.Count > 0)
+                    {
+                        chosenID1 = (int)Math.Floor(random.NextDouble() * IDs.Count) + 1;
+                    }
+                    else
+                    {
+                        chosenID1 = lastID;
+                        inc = true;
+                    }
+                    if (id2choice > 0.5 && IDs.Count > 0)
+                    {
+                        chosenID2 = (int)Math.Floor(random.NextDouble() * IDs.Count) + 1;
+                    }
+                    else
+                    {
+                        if (inc)
+                        {
+                            lastID++;
+                            inc = false;
+                        }
+                        chosenID2 = lastID;
+                    }
                 } while ((chosenID1 == chosenID2) || pairs.Any(p => p.First == chosenID1 && p.Second == chosenID2 || p.First == chosenID2 && p.Second == chosenID1));
                 pairs.Add(new Pair<int, int>(chosenID1, chosenID2));
 
@@ -213,8 +234,8 @@ namespace Simulation
                 else
                 {
                     System.IO.MemoryStream tmp = new System.IO.MemoryStream();
-                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 16 * random.NextDouble() - 1))); // Position x-axis (4 bytes)
-                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 16 * random.NextDouble()))); // Position y-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 4 * random.NextDouble() + 3))); // Position x-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 4 * random.NextDouble() + 4))); // Position y-axis (4 bytes)
                     tmp.Append(BitConverter.GetBytes(0.0f)); // Position z-axis (4 bytes)
 
                     tmp.Append(BitConverter.GetBytes(0.0f)); // Rotation x-axis (4 bytes)
