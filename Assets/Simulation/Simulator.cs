@@ -177,7 +177,7 @@ namespace Simulation
             List<Pair<int, int>> pairs = new List<Pair<int, int>>();
             int lastID = 1;
             System.IO.MemoryStream stream = new System.IO.MemoryStream();
-            int randomNumber = random.Next(2, 100);
+            int randomNumber = random.Next(2, 10);
             //Console.WriteLine(randomNumber*82);
             float[] lastPosition = new float[3] { 0.0f, 0.0f, 0.0f };
             for (int i = 0; i < randomNumber; i++)
@@ -213,8 +213,8 @@ namespace Simulation
                 else
                 {
                     System.IO.MemoryStream tmp = new System.IO.MemoryStream();
-                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 4 * random.NextDouble() - 1))); // Position x-axis (4 bytes)
-                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 4 * random.NextDouble()))); // Position y-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 16 * random.NextDouble() - 1))); // Position x-axis (4 bytes)
+                    tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 16 * random.NextDouble()))); // Position y-axis (4 bytes)
                     tmp.Append(BitConverter.GetBytes(0.0f)); // Position z-axis (4 bytes)
 
                     tmp.Append(BitConverter.GetBytes(0.0f)); // Rotation x-axis (4 bytes)

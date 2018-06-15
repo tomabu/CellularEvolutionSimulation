@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using NLog;
 namespace Simulation
 {
     class Program : MonoBehaviour

@@ -254,10 +254,14 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\SaveData\Example\SaveDataExample.cs" />
     <Compile Include="Assets\SaveData\SaveData.cs" />
+    <Compile Include="Assets\Scripts\CreateAndAdd.cs" />
     <Compile Include="Assets\Scripts\FromChromosome.cs" />
     <Compile Include="Assets\Scripts\LoadObject.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
@@ -270,11 +274,16 @@
     <Compile Include="Assets\Simulation\MemoryStreamExtension.cs" />
     <Compile Include="Assets\Simulation\Organism.cs" />
     <Compile Include="Assets\Simulation\Organism1.cs" />
+    <Compile Include="Assets\Simulation\OrganismFactory.cs" />
     <Compile Include="Assets\Simulation\Pair.cs" />
     <Compile Include="Assets\Simulation\Program.cs" />
     <Compile Include="Assets\Simulation\Simulator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
+    <None Include="Assets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.XML" />
+    <None Include="Assets\JsonDotNet\Assemblies\Windows\Newtonsoft.Json.XML" />
+    <None Include="Assets\JsonDotNet\link.xml" />
     <None Include="Assets\SaveData\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

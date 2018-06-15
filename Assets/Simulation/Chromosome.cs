@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Simulation
 {
-    class Chromosome
+    public class Chromosome
     {
         public byte[] fullCode { get; }
         public Feature[] features { get; }
