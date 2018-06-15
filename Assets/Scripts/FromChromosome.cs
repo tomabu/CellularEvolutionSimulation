@@ -44,8 +44,9 @@ public class FromChromosome : MonoBehaviour {
 
         var bonePos = new Vector3((features.firstPosX + features.secondPosX) / 2, (features.firstPosY + features.secondPosY) / 2, (features.firstPosZ + features.secondPosZ) / 2);
         var boneRot = Vector3.Angle(joint1.transform.position, joint2.transform.position);
-        var z = (float)Math.Atan2(features.firstPosX - features.secondPosX, features.firstPosY - features.secondPosY) * (float)(180 / Math.PI);
-        GameObject bone = Instantiate(Resources.Load("bone"), bonePos, Quaternion.Euler(0, 0, -boneRot)) as GameObject;
+        //var z = (float)Math.Atan2(features.firstPosX - features.secondPosX, features.firstPosY - features.secondPosY) * (float)(180 / Math.PI);
+        var rotation = Quaternion.FromToRotation(Vector3.up, joint1.transform.position - joint2.transform.position);
+        GameObject bone = Instantiate(Resources.Load("bone"), bonePos, rotation) as GameObject;
         bone.transform.localScale = new Vector3(0.2999f, Vector3.Distance(joint1.transform.position, joint2.transform.position) / 2, 0.2999f);
     }
 }
