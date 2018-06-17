@@ -62,18 +62,19 @@
     <Compile Include="Assets\SaveData\SaveData.cs" />
     <Compile Include="Assets\Scripts\CreateAndAdd.cs" />
     <Compile Include="Assets\Scripts\FromChromosome.cs" />
+    <Compile Include="Assets\Scripts\Launch.cs" />
     <Compile Include="Assets\Scripts\LoadObject.cs" />
+    <Compile Include="Assets\Scripts\MouseDrag.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\ObjectSerializer.cs" />
+    <Compile Include="Assets\Scripts\RenameAttribute.cs" />
     <Compile Include="Assets\Scripts\SaveObject.cs" />
     <Compile Include="Assets\Scripts\Startup.cs" />
     <Compile Include="Assets\Scripts\Terain.cs" />
     <Compile Include="Assets\Simulation\Chromosome.cs" />
     <Compile Include="Assets\Simulation\MemoryStreamExtension.cs" />
     <Compile Include="Assets\Simulation\Organism.cs" />
-    <Compile Include="Assets\Simulation\Organism1.cs" />
-    <Compile Include="Assets\Simulation\OrganismFactory.cs" />
     <Compile Include="Assets\Simulation\Pair.cs" />
     <Compile Include="Assets\Simulation\Program.cs" />
     <Compile Include="Assets\Simulation\Simulator.cs" />
@@ -84,11 +85,11 @@
     <None Include="Assets\packages\NLog.4.4.12\lib\sl5\NLog.xml" />
     <None Include="Assets\packages\NLog.4.4.12\lib\net35\NLog.xml" />
     <None Include="Assets\packages\NLog.4.4.12\lib\net40\NLog.xml" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

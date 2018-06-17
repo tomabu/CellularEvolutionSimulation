@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FromChromosome : MonoBehaviour {
-
+    
     private Chromosome chrom;
 	// Use this for initialization
 	void Start () {
         var rand = new System.Random();
         rand.Next();
-        var chromosome = new Chromosome(Simulation.Simulator.GenerateChromosome(rand));
+        var chromosome = new Chromosome(Simulation.Simulator.GenerateChromosome(2,10,10,10000,0.85f,1,4,rand));
         chrom = chromosome;
         Generate(chromosome);	
 	}
