@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovementEvolution", "MovementEvolution.csproj", "{351F788A-E2D6-A01F-31DC-DAD0717DB80A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovementEvolution", "Assembly-CSharp.csproj", "{91719464-6F64-082C-1687-046DF4C62439}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovementEvolution", "Assembly-CSharp-Editor.csproj", "{BFD1FCF4-9926-B40E-64B4-33E1F5DF91FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{351F788A-E2D6-A01F-31DC-DAD0717DB80A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{351F788A-E2D6-A01F-31DC-DAD0717DB80A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{351F788A-E2D6-A01F-31DC-DAD0717DB80A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{351F788A-E2D6-A01F-31DC-DAD0717DB80A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91719464-6F64-082C-1687-046DF4C62439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91719464-6F64-082C-1687-046DF4C62439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91719464-6F64-082C-1687-046DF4C62439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91719464-6F64-082C-1687-046DF4C62439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD1FCF4-9926-B40E-64B4-33E1F5DF91FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD1FCF4-9926-B40E-64B4-33E1F5DF91FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD1FCF4-9926-B40E-64B4-33E1F5DF91FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD1FCF4-9926-B40E-64B4-33E1F5DF91FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
