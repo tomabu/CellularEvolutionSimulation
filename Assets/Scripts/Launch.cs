@@ -48,16 +48,16 @@ public class Launch : MonoBehaviour {
         [Rename("Max Distance")]
         [Tooltip("Maximum possible distance, from last selected node, of the newly generated node.")]
         public int randomScale = 4;
-
     void Start()
     {
         Simulator Sim = new Simulator(numberofOrganisms, numberOfIterations, iterationLength, numberOfMutations, minComplexity, maxComplexity, minMotorForce, maxMotorForce, fitnesDeterminationScale, parentProbabilityScale, oldNodeChoiceThreashold, minDistance, randomScale); // Create and run simulation with given parameters
         int counter = 0;
         while (counter <= Sim.GetNumberOfIterations())
         {
+            Debug.Log(counter);
             //logger.Info("Running Iteration " + counter++);
             //Debug.Log("Running Iteration " + counter++);
-            Sim.RunIteration();
+            //Sim.RunIteration();
             //Sim.LogChanges();
         }
         //logger.Info("Simulation completed!");

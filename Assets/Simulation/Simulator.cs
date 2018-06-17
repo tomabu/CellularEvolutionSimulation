@@ -13,6 +13,7 @@ namespace Simulation
     {
         private int numberOfOrganisms, numberOfIterations, iterationLength, numberOfMutations, minComplexity, maxComplexity, lastID = 0, minMotorForce, maxMotorForce, parentProbabilityScale, fitnesDeterminationScale, minDistance, randScale;
         float oldNodeChoiceThresh;
+        FromChromosome fromchromosome;
         System.Random r;
         List<Pair<Organism,double>> Organisms = new List<Pair<Organism,double>>();
         //NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

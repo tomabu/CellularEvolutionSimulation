@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simulation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,12 +35,16 @@ public class Organism {
     public float Move(int iterationLength)
     {
         Vector3 lastPosition = CurrentPosition;
+        var chromosome = new Chromosome(this.Chromosome); // Simulation.Simulator.GenerateChromosome(2, 10, 10, 10000, 0.85f, 1, 4, rand)
+        FromChromosome.Generate(chromosome);
         /* Do the movement:
            1. Iniciate organism from chormosome
            2. Run the simulation with given length of Iteration Duration parameter
            3. Set the CurrentPosition parameter to current position of the organism.
         */
         // Mock for testing purposes
+        //FromChromosome.Destroy();
+
         CurrentPosition.Set(CurrentPosition.x + MovementAbility.x, CurrentPosition.y + MovementAbility.y, CurrentPosition.z + MovementAbility.z);
 
         // Calculate difference and return
