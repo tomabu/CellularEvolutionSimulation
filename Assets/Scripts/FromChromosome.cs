@@ -9,9 +9,9 @@ public class FromChromosome : MonoBehaviour {
     private int value = 0;
 	// Use this for initialization
 	void Start () {
-        //var rand = new System.Random();
-        //var chromosome = new Chromosome(Simulation.Simulator.GenerateChromosome(2, 10, 10, 10000, 0.85f, 1, 4, rand));
-        //FromChromosome.Generate(chromosome);
+        var rand = new System.Random();
+        var chromosome = new Chromosome(Simulation.Simulator.GenerateChromosome(2, 10, 10, 500, 0.85f, 1, 4, rand));
+        FromChromosome.Generate(chromosome);
 
         /* Do the movement:
            1. Iniciate organism from chormosome
@@ -19,12 +19,12 @@ public class FromChromosome : MonoBehaviour {
            3. Set the CurrentPosition parameter to current position of the organism.
         */
         // Mock for testing purposes
-        
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (value >= 100) {
+        if (value >= 60 * 10 ) {
             Destroy();
         }
             value++;
@@ -71,6 +71,9 @@ public class FromChromosome : MonoBehaviour {
                 limits.min = feature.firstLowAng;
                 hinge1.limits = limits;
                 hinge1.connectedBody = boneRigidBody;
+
+                var mov1 = joint1.GetComponent<Movement>();
+                mov1.motorSpeed = (float)feature.firstMaxMotor;
             } else
             {
                 var fixed1 = joint1.AddComponent<FixedJoint2D>();
@@ -85,6 +88,9 @@ public class FromChromosome : MonoBehaviour {
                 limits2.min = feature.secondLowAng;
                 hinge2.limits = limits2;
                 hinge2.connectedBody = boneRigidBody;
+
+                var mov2 = joint2.GetComponent<Movement>();
+                mov2.motorSpeed = (float)feature.secondMaxMotor;
             }
             else
             {

@@ -38,7 +38,7 @@ public class Launch : MonoBehaviour {
         public int minMotorForce = 10;
         [Rename("Max Muscle Strength")]
         [Tooltip("Maximum number of parts that the organism can consist of.")]
-        public int maxMotorForce = 10000;
+        public int maxMotorForce = 200;
         [Rename("Connection Probability")]
         [Tooltip("The probability of connecting two existing nodes with bone.")]
         public float oldNodeChoiceThreashold = 0.85f;
