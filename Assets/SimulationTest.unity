@@ -138,7 +138,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 192619094}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06f11b0fac86d6c42a895f6b1f3918b7, type: 3}
   m_Name: 
@@ -301,7 +301,6 @@ GameObject:
   - component: {fileID: 1097411111}
   - component: {fileID: 1097411110}
   - component: {fileID: 1097411109}
-  - component: {fileID: 1097411114}
   - component: {fileID: 1097411113}
   m_Layer: 0
   m_Name: Main Camera
@@ -379,25 +378,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1097411108}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e01e344551d17545a2c7972515b18a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1097411114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1097411108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed22b5fd3a6e0574eaa9ba43bb87f998, type: 3}
+  m_Script: {fileID: 11500000, guid: 252b5da03587800429c857991948857c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberofOrganisms: 12
-  numberOfIterations: 20
-  iterationLength: 50
+  numberofOrganisms: 8
+  numberOfIterations: 3
+  iterationLength: 2
   numberOfMutations: 1
   fitnesDeterminationScale: 2
   parentProbabilityScale: 3

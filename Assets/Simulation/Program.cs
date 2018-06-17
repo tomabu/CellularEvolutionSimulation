@@ -18,7 +18,7 @@ namespace Simulation
             Debug.Log("Target place to reach: ");
             //string[] tokens = "3 3 3".Split(); //Console.ReadLine().Split();
             //float[] target = new float[3] { Convert.ToInt32(tokens[0]), Convert.ToSingle(tokens[1]), Convert.ToSingle(tokens[2]) };
-            Simulator Sim = new Simulator(numberofOrganisms, numberOfIterations, iterationLength, 1, 2, 10, 10, 10000, 2 ,3, 0.85f, 1, 4); // Create and run simulation with parameters
+            Simulator_Old Sim = new Simulator_Old(numberofOrganisms, numberOfIterations, iterationLength, 1, 2, 10, 10, 10000, 2 ,3, 0.85f, 1, 4); // Create and run simulation with parameters
             int counter = 0;
             while (counter <= Sim.GetNumberOfIterations())
             {

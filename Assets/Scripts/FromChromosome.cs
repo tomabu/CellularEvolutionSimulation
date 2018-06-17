@@ -8,18 +8,7 @@ public class FromChromosome : MonoBehaviour {
 
     private int value = 0;
 	// Use this for initialization
-	void Start () {
-        //var rand = new System.Random();
-        //var chromosome = new Chromosome(Simulation.Simulator.GenerateChromosome(2, 10, 10, 10000, 0.85f, 1, 4, rand));
-        //FromChromosome.Generate(chromosome);
-
-        /* Do the movement:
-           1. Iniciate organism from chormosome
-           2. Run the simulation with given length of Iteration Duration parameter
-           3. Set the CurrentPosition parameter to current position of the organism.
-        */
-        // Mock for testing purposes
-        
+	void Start () {        
     }
 	
 	// Update is called once per frame
@@ -28,6 +17,7 @@ public class FromChromosome : MonoBehaviour {
             Destroy();
         }
             value++;
+        //Debug.Log(value.ToString());
     }
 
     public static void Generate(Chromosome chromosome)

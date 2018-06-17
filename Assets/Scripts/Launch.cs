@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Simulation;
-public class Launch : MonoBehaviour {
+public class TestCoroutine : MonoBehaviour {
 
     [Header("Simulation Parameters")]
         [Rename("Population")]
@@ -50,17 +50,16 @@ public class Launch : MonoBehaviour {
         public int randomScale = 4;
     void Start()
     {
-        Simulator Sim = new Simulator(numberofOrganisms, numberOfIterations, iterationLength, numberOfMutations, minComplexity, maxComplexity, minMotorForce, maxMotorForce, fitnesDeterminationScale, parentProbabilityScale, oldNodeChoiceThreashold, minDistance, randomScale); // Create and run simulation with given parameters
+        Simulator_Old Sim = new Simulator_Old(numberofOrganisms, numberOfIterations, iterationLength, numberOfMutations, minComplexity, maxComplexity, minMotorForce, maxMotorForce, fitnesDeterminationScale, parentProbabilityScale, oldNodeChoiceThreashold, minDistance, randomScale); // Create and run simulation with given parameters
         int counter = 0;
         while (counter <= Sim.GetNumberOfIterations())
         {
-            Debug.Log(counter);
             //logger.Info("Running Iteration " + counter++);
-            //Debug.Log("Running Iteration " + counter++);
-            //Sim.RunIteration();
+            Debug.Log("Running Iteration " + counter++);
+            Sim.RunIteration();
             //Sim.LogChanges();
         }
         //logger.Info("Simulation completed!");
-        //Debug.Log("Simulation completed!");
+        Debug.Log("Simulation completed!");
     }
 }

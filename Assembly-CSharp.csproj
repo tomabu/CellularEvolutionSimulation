@@ -77,7 +77,9 @@
     <Compile Include="Assets\Simulation\Organism.cs" />
     <Compile Include="Assets\Simulation\Pair.cs" />
     <Compile Include="Assets\Simulation\Program.cs" />
-    <Compile Include="Assets\Simulation\Simulator.cs" />
+    <Compile Include="Assets\Simulation\Simulator_Old.cs" />
+    <Compile Include="Assets\Test\Run.cs" />
+    <Compile Include="Assets\Test\Simulator.cs" />
     <None Include="Assets\SaveData\readme.txt" />
     <None Include="Assets\packages\NLog.4.4.12\lib\net45\NLog.xml" />
     <None Include="Assets\packages\NLog.4.4.12\lib\sl4\NLog.xml" />
