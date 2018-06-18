@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{91719464-6F64-082C-1687-046DF4C62439}</ProjectGuid>
+    <ProjectGuid>{6352A553-07BC-BC51-4C59-C3F077F2016F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -63,32 +63,37 @@
     <Compile Include="Assets\SaveData\Example\SaveDataExample.cs" />
     <Compile Include="Assets\SaveData\SaveData.cs" />
     <Compile Include="Assets\Scripts\CreateAndAdd.cs" />
-    <Compile Include="Assets\Scripts\FromChromosome.cs" />
     <Compile Include="Assets\Scripts\Launch.cs" />
     <Compile Include="Assets\Scripts\LoadObject.cs" />
     <Compile Include="Assets\Scripts\MouseDrag.cs" />
-    <Compile Include="Assets\Scripts\Movement.cs" />
-    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\ObjectSerializer.cs" />
-    <Compile Include="Assets\Scripts\RenameAttribute.cs" />
     <Compile Include="Assets\Scripts\SaveObject.cs" />
     <Compile Include="Assets\Scripts\Startup.cs" />
     <Compile Include="Assets\Scripts\Terain.cs" />
-    <Compile Include="Assets\Simulation\Chromosome.cs" />
-    <Compile Include="Assets\Simulation\MemoryStreamExtension.cs" />
-    <Compile Include="Assets\Simulation\Organism.cs" />
-    <Compile Include="Assets\Simulation\Pair.cs" />
     <Compile Include="Assets\Simulation\Program.cs" />
     <Compile Include="Assets\Simulation\Simulator_Old.cs" />
+    <Compile Include="Assets\Test\Chromosome.cs" />
+    <Compile Include="Assets\Test\FromChromosome.cs" />
+    <Compile Include="Assets\Test\GlobalVariables.cs" />
+    <Compile Include="Assets\Test\MemoryStreamExtension.cs" />
+    <Compile Include="Assets\Test\Movement.cs" />
+    <Compile Include="Assets\Test\Organism.cs" />
+    <Compile Include="Assets\Test\Pair.cs" />
+    <Compile Include="Assets\Test\RenameAttribute.cs" />
     <Compile Include="Assets\Test\Run.cs" />
     <Compile Include="Assets\Test\Simulator.cs" />
     <None Include="Assets\SaveData\readme.txt" />
+    <None Include="Assets\packages\NLog.4.4.12\lib\net45\NLog.xml" />
+    <None Include="Assets\packages\NLog.4.4.12\lib\sl4\NLog.xml" />
     <None Include="Assets\JsonDotNet\link.xml" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/Public/Documents/Unity Projects/MovementEvolution/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
+    <None Include="Assets\packages\NLog.4.4.12\lib\sl5\NLog.xml" />
+    <None Include="Assets\packages\NLog.4.4.12\lib\net35\NLog.xml" />
+    <None Include="Assets\packages\NLog.4.4.12\lib\net40\NLog.xml" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/Public/Documents/Unity Projects/MovementEvolution/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -264,9 +269,6 @@
     <Reference Include="Unity.Locator">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Unity.Locator.dll</HintPath>
     </Reference>
-    <Reference Include="Vuforia.UnityExtensions">
-      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -289,16 +291,61 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:/Users/Public/Documents/Unity Projects/MovementEvolution/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/NLog.4.4.12/lib/net35/NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/NLog.4.4.12/lib/net40/NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/NLog.4.4.12/lib/net45/NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/NLog.4.4.12/lib/sl4/NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/NLog.4.4.12/lib/sl5/NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.Abstractions.3.3.0/lib/net40/Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.Abstractions.3.3.0/lib/net45/Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.Abstractions.3.3.0/lib/net47/Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.Abstractions.3.3.0/lib/netcoreapp1.0/Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.Abstractions.3.3.0/lib/netstandard1.0/Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.Abstractions.3.3.0/lib/netstandard2.0/Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.NLog.1.0.1/lib/net40/Unity.NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.NLog.1.0.1/lib/net45/Unity.NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.NLog.1.0.1/lib/net46/Unity.NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.NLog">
+      <HintPath>C:/Users/4figh/Documents/AGH EAIIB Informatyka/6 Semestr/Studio Projektowe/CellularEvolutionSimulation/Assets/packages/Unity.NLog.1.0.1/lib/net47/Unity.NLog.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/tbuczek/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/4figh/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/tbuczek/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/4figh/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/tbuczek/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/4figh/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

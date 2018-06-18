@@ -5,21 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Organism {
-
     public Vector3 CurrentPosition { get; set; }
+    public Vector3 LastPosition {get; set;}
     public byte[] Chromosome { get; }
     public int ID { get; }
     // public double InternalClock { get; }
 
     // For Testing Purposes Only
-    public Vector3 MovementAbility { get; } // Movement simulation
+    //public static Vector3 MovementAbility { get; set;} // Movement simulation
 
     public Organism(int in_id, byte[] in_chromosome, System.Random random)
     {
         ID = in_id;
         Chromosome = in_chromosome;
         CurrentPosition = new Vector3( 0, 0, 0 );
-        MovementAbility = new Vector3( (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble() ); // Generating random movement ability
+        //MovementAbility = new Vector3( (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble() ); // Generating random movement ability
         //Debug.Log("Movement Ability: (" + MovementAbility[0].ToString("n3") + ", " + MovementAbility[1].ToString("n3") + ", " + MovementAbility[2].ToString("n3") + ")");
     }
 
@@ -32,22 +32,18 @@ public class Organism {
         //Debug.Log("[" + ID + "]" + "Movement Ability: (" + MovementAbility[0].ToString("n3") + ", " + MovementAbility[1].ToString("n3") + ", " + MovementAbility[2].ToString("n3") + ")");
     }
 
-    public float Move(int iterationLength)
+    public void Move(int iterationLength, FromChromosome fromchromosome)
     {
-        Vector3 lastPosition = CurrentPosition;
-        //var chromosome = new Chromosome(this.Chromosome); // Simulation.Simulator.GenerateChromosome(2, 10, 10, 10000, 0.85f, 1, 4, rand)
+        LastPosition = CurrentPosition;
+        var chromosome = new Chromosome(this.Chromosome);
         //FromChromosome.Generate(chromosome);
-        /* Do the movement:
-           1. Iniciate organism from chormosome
-           2. Run the simulation with given length of Iteration Duration parameter
-           3. Set the CurrentPosition parameter to current position of the organism.
-        */
-        //FromChromosome.Destroy();
-        // Mock for testing purposes
-        CurrentPosition.Set(CurrentPosition.x + MovementAbility.x, CurrentPosition.y + MovementAbility.y, CurrentPosition.z + MovementAbility.z);
+        fromchromosome.Generate(chromosome, iterationLength);
+    }
 
-        // Calculate difference and return
-        return Vector3.Distance(CurrentPosition,lastPosition);
+    public float GetDeltaPosition()
+    {
+        CurrentPosition = GlobalVariables.Position;
+        return Vector3.Distance(CurrentPosition, LastPosition);
     }
 
     //   // Use this for initialization

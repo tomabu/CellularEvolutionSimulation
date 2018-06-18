@@ -7,12 +7,15 @@ using UnityEngine;
 public class FromChromosome : MonoBehaviour {
 
     private int value = 0;
-	// Use this for initialization
+    private static Feature[] features;
+    private int _iterationLength;
+    // Use this for initialization
 
-	void Start () {
-        var rand = new System.Random();
-        var chromosome = new Chromosome(Simulation.Simulator.GenerateChromosome(2, 10, 10, 500, 0.85f, 1, 4, rand));
-        FromChromosome.Generate(chromosome);
+    void Start()
+    {
+        //var rand = new System.Random();
+        //var chromosome = new Chromosome(Simulator.GenerateChromosome(2, 10, 10, 500, 0.85f, 1, 4, rand));
+        //FromChromosome.Generate(chromosome);
 
         /* Do the movement:
            1. Iniciate organism from chormosome
@@ -23,19 +26,23 @@ public class FromChromosome : MonoBehaviour {
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (value >= 60 * 10 ) {
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (value >= _iterationLength)
+        {
+            //GlobalVariables.Position = GameObject.FindGameObjectsWithTag("Joint")[0].transform.position;
             Destroy();
         }
-            value++;
+        value++;
         //Debug.Log(value.ToString());
     }
 
-    public static void Generate(Chromosome chromosome)
+    public void Generate(Chromosome chromosome, int iterationlength)
     {
-        var features = chromosome.features;
+        _iterationLength = iterationlength * 50; // iteration length multiplied by fps - 5
+        features = chromosome.features;
         foreach (var feature in features)
         {
             // Adding two joints
@@ -107,6 +114,7 @@ public class FromChromosome : MonoBehaviour {
 
     public void Destroy()
     {
+        GlobalVariables.Position = GameObject.FindGameObjectsWithTag("Joint")[0].transform.position;
         var jointObjects = GameObject.FindGameObjectsWithTag("Joint");
         var boneObjects = GameObject.FindGameObjectsWithTag("Bone");
         foreach(var obj in jointObjects)
@@ -117,5 +125,6 @@ public class FromChromosome : MonoBehaviour {
         {
             Destroy(obj);
         }
+        Destroy(this);
     }
 }
