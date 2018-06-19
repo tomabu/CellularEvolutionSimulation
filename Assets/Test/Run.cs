@@ -35,7 +35,7 @@ public class Run : MonoBehaviour {
     public int maxComplexity = 10;
     [Rename("Hinge Joint Posibility")]
     [Tooltip("The probability from 0 to 1 to generate hinge goint.")]
-    public float hingePosibility = 10;
+    public float hingePosibility = 0.95f;
     [Rename("Min Muscle Strength")]
     [Tooltip("Minimum number of parts that the organism can consist of.")]
     public int minMotorForce = 10;

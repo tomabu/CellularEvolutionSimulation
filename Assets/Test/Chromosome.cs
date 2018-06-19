@@ -5,8 +5,8 @@ namespace Simulation
 {
     public class Chromosome
     {
-        public byte[] fullCode { get; }
-        public Feature[] features { get; }
+        public byte[] fullCode { get; set; }
+        public Feature[] features { get; set; }
         public Chromosome(byte[] chromosome)
         {
             fullCode = new byte[chromosome.Length];

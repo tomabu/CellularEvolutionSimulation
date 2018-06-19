@@ -268,10 +268,10 @@ public class Simulator : MonoBehaviour
             }
             pairs.Add(new Pair<int, int>(chosenID1, chosenID2));
             stream.Append(BitConverter.GetBytes(chosenID1)); //Id of second Joint (4 bytes)
-            firstType = random.NextDouble() < 0.95 ? true : false;
+            firstType = random.NextDouble() < (double)hingePosibility ? true : false;
             stream.Append(BitConverter.GetBytes(firstType)); //Type of joint (1 byte)
             stream.Append(BitConverter.GetBytes(chosenID2)); //Id of second Joint (4 bytes)
-            secondType = random.NextDouble() < 0.95 ? true : false;
+            secondType = random.NextDouble() < (double)hingePosibility ? true : false;
             stream.Append(BitConverter.GetBytes(secondType)); //Type of joint (1 byte)
 
 
@@ -385,7 +385,99 @@ public class Simulator : MonoBehaviour
         O2.Chromosome.Skip(random).Take(Chromosome2.Length - random).ToArray().CopyTo(Chromosome1, random);
         O2.Chromosome.Take(random).ToArray().CopyTo(Chromosome2, 0);
         O1.Chromosome.Skip(random).Take(Chromosome1.Length - random).ToArray().CopyTo(Chromosome2, random);
-        return new Pair<Organism, Organism>(new Organism(++lastID, Chromosome1, r), new Organism(++lastID, Chromosome2, r));
+        Chromosome1 = MakeConsistent(Chromosome1);
+        Chromosome2 = MakeConsistent(Chromosome2);
+        return new Pair<Organism, Organism>(new Organism(++lastID, Chromosome1, r), new Organism(++lastID, Chromosome2, r));// Chromosome1, r), new Organism(++lastID, Chromosome2, r));
+    }
+
+    public byte[] MakeConsistent(byte[] chromosome)
+    {
+        Chromosome ch1 = new Chromosome(chromosome);
+        List<byte[]> validFeatures = new List<byte[]>();
+        foreach (Feature f in ch1.features)
+        {
+            if ((f.firstID != 0) && (f.secondID != 0))
+            {
+                validFeatures.Add(f.featureCode);
+            }
+        }
+        return validFeatures.SelectMany(a => a).ToArray();
+    }
+
+    public byte[] Reduce(byte[] chromosome)
+    {
+        Chromosome ch1 = new Chromosome(chromosome);
+
+        Dictionary<int, Pair<int, byte[]>> ids = new Dictionary<int, Pair<int, byte[]>>();
+
+        // change ids
+        int newID = 1;
+        Dictionary<string, int> changedJoints = new Dictionary<string, int>();
+        for (int i = 0; i < ch1.features.Count(); i++)
+        {
+            string pos1 = Math.Round(ch1.features[i].firstPosX, 6).ToString() + Math.Round(ch1.features[i].firstPosY, 6).ToString() + Math.Round(ch1.features[i].firstPosZ, 6).ToString();
+            string pos2 = Math.Round(ch1.features[i].secondPosX, 6).ToString() + Math.Round(ch1.features[i].secondPosY, 6).ToString() + Math.Round(ch1.features[i].secondPosZ, 6).ToString();
+            if (changedJoints.ContainsKey(pos1))
+            {
+                ch1.features[i].firstID = changedJoints[pos1];
+            }
+            else
+            {
+                ch1.features[i].firstID = newID;
+                changedJoints.Add(pos1, newID);
+                newID++;
+            }
+            if (changedJoints.ContainsKey(pos2))
+            {
+                ch1.features[i].secondID = changedJoints[pos2];
+            }
+            else
+            {
+                ch1.features[i].secondID = newID;
+                changedJoints.Add(pos2, newID);
+                newID++;
+            }
+        }
+
+        foreach (Feature f in ch1.features)
+        {
+            if (ids.ContainsKey(f.firstID)) ids[f.firstID].First = ids[f.firstID].First + 1;
+            else ids.Add(f.firstID, new Pair<int, byte[]>(1, f.featureCode.Take(41).ToArray()));
+            if (ids.ContainsKey(f.secondID)) ids[f.secondID].First = ids[f.secondID].First + 1;
+            else ids.Add(f.secondID, new Pair<int, byte[]>(1, f.featureCode.Skip(41).Take(41).ToArray()));
+        }
+
+        List<byte[]> toLink = new List<byte[]>();
+        List<byte[]> reducedOrganism = new List<byte[]>();
+
+        // reduce the model
+        for (int i = 0; i < ch1.features.Count(); i++)
+        {
+            bool needsLinking = false;
+            if (ids[ch1.features[i].firstID].First < 2 && ids[ch1.features[i].secondID].First < 2) needsLinking = true;
+            if (needsLinking)
+            {
+                byte[] feature = ch1.features[i].featureCode;
+                toLink.Add(feature);
+            }
+            else
+            {
+                byte[] feature = ch1.features[i].featureCode;
+                reducedOrganism.Add(feature);
+            }
+        }
+
+        //link features
+        foreach (byte[] l in toLink)
+        {
+            byte[] linked = new byte[82];
+            System.Buffer.BlockCopy(l, 0, linked, 0, 41);
+            var rnd = r.Next(0, reducedOrganism.Count());
+            System.Buffer.BlockCopy(reducedOrganism[rnd], 0, linked, 41, 41);
+            reducedOrganism.Add(linked);
+        }
+
+        return reducedOrganism.SelectMany(a => a).ToArray();
     }
 
     /// <summary>

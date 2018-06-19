@@ -41,7 +41,7 @@ public class FromChromosome : MonoBehaviour {
 
     public void Generate(Chromosome chromosome, int iterationlength)
     {
-        _iterationLength = iterationlength * 50; // iteration length multiplied by fps - 5
+        _iterationLength = iterationlength * 40; // iteration length multiplied by fps - 5
         features = chromosome.features;
         foreach (var feature in features)
         {
