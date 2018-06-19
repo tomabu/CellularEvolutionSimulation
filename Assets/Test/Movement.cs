@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EvolutionEngine;
-
+/// <summary>
+/// Class proviging movement functions and methods.
+/// </summary>
 public class Movement : MonoBehaviour
 {
 
@@ -26,15 +28,11 @@ public class Movement : MonoBehaviour
     {
         //LoadOrganism();
         preUpdateComplete = false;
-        //motorSpeed = 200;
-        //motorBackSpeed = 200;
         movementInterval = 40;
         forward = true;
-        //hingeJoint = GetComponent<HingeJoint2D>();
         hingeJoint = gameObject.GetComponent<HingeJoint2D>();
         float angle = hingeJoint.jointAngle;
         motor = hingeJoint.motor;
-        //Debug.Log("initAngle: " + angle);
         if (hingeJoint != null)
         {
             StartCoroutine(MovementFunction());
@@ -44,21 +42,12 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //preUpdate();
-        // up and down keys, range [-1, 1]
-        //float acceleration = Input.GetAxis("Vertical");
+
     }
 
-    //private void preUpdate()
-    //{
-    //    if (!preUpdateComplete)
-    //    {
-    //        preUpdateComplete = true;
-    //        //var model = GameObject.FindGameObjectWithTag("Organism");
-    //        //ObjectSerializer.SaveOrganism(model);
-    //    }
-    //}
-
+    /// <summary>
+    /// Method moving muscle.
+    /// </summary>
     private void Move()
     {
         var acceleration = 0.2f;
@@ -69,6 +58,9 @@ public class Movement : MonoBehaviour
         GoBack();
     }
 
+    /// <summary>
+    /// Method getting muscle back to original state.
+    /// </summary>
     private void GoBack()
     {
         var acceleration = 0.0f;
@@ -86,11 +78,13 @@ public class Movement : MonoBehaviour
         //Debug.Log("Counter: " + counter);
     }
 
+    /// <summary>
+    /// Method setting motor direction and speed of a hinge joint (muscle).
+    /// </summary>
+    /// <returns></returns>
     IEnumerator MovementFunction()
     {
         float a;
-        //int frames = 20;
-        //var acceleration = 200.0f;
         for (int i = 0; i <= movementInterval; i++)
         {
             if (forward)

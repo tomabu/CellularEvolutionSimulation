@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+/// <summary>
+/// Simple generic class for pairs.
+/// </summary>
 namespace Simulation
 {
     public class Pair<T1, T2>

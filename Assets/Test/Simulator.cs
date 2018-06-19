@@ -8,6 +8,10 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 
+/// <summary>
+/// Main simulator Class.
+/// </summary>
+
 public class Simulator : MonoBehaviour
 {
 
@@ -17,6 +21,23 @@ public class Simulator : MonoBehaviour
     System.Random r;
     List<Pair<Organism, double>> Organisms = new List<Pair<Organism, double>>();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="noo">Number of organisms</param>
+    /// <param name="noi">Number of Iterations</param>
+    /// <param name="il">Iteration Length</param>
+    /// <param name="nom">Number of Mutations</param>
+    /// <param name="minc">Organism minimum complexity</param>
+    /// <param name="maxc">Organism maximum complexity</param>
+    /// <param name="minmf">Organism minimal muscle strength</param>
+    /// <param name="maxmf">Organism max muscle strength</param>
+    /// <param name="fds">Fitness determination scale</param>
+    /// <param name="pps">Parent probability scale</param>
+    /// <param name="olcf">Old Node Choice Thresh</param>
+    /// <param name="md">Min distance of newly generated joint</param>
+    /// <param name="hp">Possibility of generating hinge joint (muscle).</param>
+    /// <param name="rs"></param>
     public void Launch(int noo, int noi, int il, int nom, int minc, int maxc, int minmf, int maxmf, int fds, int pps, float olcf, int md, float hp, int rs)
     {
         iteration = 1;
@@ -43,7 +64,9 @@ public class Simulator : MonoBehaviour
         Debug.Log("Simulation Started!");
         StartCoroutine(RunIterations());
     }
-
+    /// <summary>
+    /// Class launching iterations in unity environment.
+    /// </summary>
     private IEnumerator RunIterations()
     {
         for(int i=0; i < numberOfIterations; i++)
@@ -54,7 +77,10 @@ public class Simulator : MonoBehaviour
             if (iteration > numberOfIterations) Debug.Log("Simulation completed!");
         }
     }
-
+    /// <summary>
+    /// Iteration class - here the whole magic happens.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator RunIteration()
     {
         Debug.Log("STAGE 1 - Fitness Determination - Iteration: " + iteration.ToString());
@@ -129,11 +155,6 @@ public class Simulator : MonoBehaviour
         }
         //logger.Info("IDs of chosen organisms: ");
 
-        ////Show ID's of organisms that were chosen
-        //foreach (Pair<Organism, double> t in Parents)
-        //{
-        //    //logger.Info(t.First.ID + "   ");
-        //}
         // Offspring Production
         //logger.Info("STAGE 3 - OffSpring Production");
         Debug.Log("STAGE 3 - OffSpring Production");
@@ -189,16 +210,19 @@ public class Simulator : MonoBehaviour
         Organisms.Clear();
         Organisms.AddRange(Offspring);
     }
-
-    //public void Move()
-    //{
-    //    var bytes = Simulation.Simulator_Old.GenerateChromosome(2, 10, 10, 10000, 0.85f, 1, 4, new System.Random());
-    //    var chromosome = new Chromosome(bytes);
-    //    fromchromosome = gameObject.AddComponent<FromChromosome>();
-    //    FromChromosome.Generate(chromosome);
-    //    Debug.Log("Move!");
-    //}
-
+    /// <summary>
+    /// Class generating chromosome with given parameters.
+    /// </summary>
+    /// <param name="minComplexity">Organism min complexity.</param>
+    /// <param name="maxComplexity">Organism max complexity.</param>
+    /// <param name="minMotorForce">Organism min muscle strength.</param>
+    /// <param name="maxMotorForce">Organism max muscle strength.</param>
+    /// <param name="oldNodeChoiceThresh">Possibility of connecting already created nodes.</param>
+    /// <param name="minDistance">The minimum distance from last created joint of the new joint.</param>
+    /// <param name="randScale">Scaling parameter.</param>
+    /// <param name="hingePosibility">Possibility of generating muscle.</param>
+    /// <param name="random"></param>
+    /// <returns></returns>
     public static byte[] GenerateChromosome(int minComplexity, int maxComplexity, int minMotorForce, int maxMotorForce, float oldNodeChoiceThresh, int minDistance, int randScale, float hingePosibility, System.Random random)
     {
         List<byte[]> IDs = new List<byte[]>();
@@ -212,38 +236,9 @@ public class Simulator : MonoBehaviour
         for (int i = 0; i < randomNumber; i++)
         {
             // HEADER (10 bytes)
-            // random IDs
-            //double id1choice, id2choice;
             double choice;
             int chosenID1 = 0, chosenID2 = 0;
             bool firstType, secondType;
-            //do
-            //{
-            //    id1choice = random.NextDouble();
-            //    id2choice = random.NextDouble();
-            //    if (id1choice > oldNodeChoiceThresh && IDs.Count > 0) // 0 to 1 typycally 0.85 because it has to be rare to choose both form old nodes
-            //    {
-            //        chosenID1 = (int)Math.Floor(random.NextDouble() * IDs.Count) + 1;
-            //    }
-            //    else
-            //    {
-            //        chosenID1 = lastID;
-            //        inc = true;
-            //    }
-            //    if (id2choice > oldNodeChoiceThresh && IDs.Count > 0) // 0 to 1 typycally 0.85 because it has to be rare to choose both form old nodes
-            //    {
-            //        chosenID2 = (int)Math.Floor(random.NextDouble() * IDs.Count) + 1;
-            //    }
-            //    else
-            //    {
-            //        if (inc)
-            //        {
-            //            lastID++;
-            //            inc = false;
-            //        }
-            //        chosenID2 = lastID;
-            //    }
-            //} while ((chosenID1 == chosenID2) || pairs.Any(p => p.First == chosenID1 && p.Second == chosenID2 || p.First == chosenID2 && p.Second == chosenID1));
             if (i == 0)
             {
                 chosenID1 = 1;
@@ -312,19 +307,15 @@ public class Simulator : MonoBehaviour
                 stream.Append(BitConverter.GetBytes(0.0f)); // Lower Angle (!= Upper Angle) (4bytes)
                 stream.Append(BitConverter.GetBytes(0.0f)); // Upper Angle (4bytes)
             }
-
+            // Second Joint
             if (chosenID2 <= IDs.Count)
             {
                 byte[] joint2 = IDs.ElementAt(chosenID2 - 1);
                 stream.Append(joint2);
-                //lastPosition = new float[] { System.BitConverter.ToSingle(joint2, 0), System.BitConverter.ToSingle(joint2, 4), System.BitConverter.ToSingle(joint2, 8) };
             }
             else
             {
                 System.IO.MemoryStream tmp = new System.IO.MemoryStream();
-                //tmp.Append(BitConverter.GetBytes((float)(lastPosition[0] + 4 * random.NextDouble() - 1))); // Position x-axis (4 bytes)
-                //tmp.Append(BitConverter.GetBytes((float)(lastPosition[1] + 4 * random.NextDouble()))); // Position y-axis (4 bytes)
-                //tmp.Append(BitConverter.GetBytes(0.0f)); // Position z-axis (4 bytes)
                 float x = (float)(lastPosition[0] + randScale * random.NextDouble() + minDistance);
                 tmp.Append(BitConverter.GetBytes(x)); // Position x-axis (4 bytes)
                 float y = (float)(lastPosition[1] + randScale * random.NextDouble() + minDistance);
@@ -345,19 +336,6 @@ public class Simulator : MonoBehaviour
                 stream.Append(BitConverter.GetBytes(random.Next(minMotorForce, maxMotorForce))); //Maximum Motor Force (4 bytes)
                 stream.Append(BitConverter.GetBytes((float)(360 * random.NextDouble()))); // Lower Angle (!= Upper Angle) (4bytes)
                 stream.Append(BitConverter.GetBytes((float)(360 * random.NextDouble()))); // Upper Angle (4bytes)
-                                                                                          //float firstAngle = (float)(360 * random.NextDouble());
-                                                                                          //float secondAngle = (float)(360 * random.NextDouble());
-                                                                                          //if (firstAngle > secondAngle)
-                                                                                          //{
-                                                                                          //    stream.Append(BitConverter.GetBytes(secondAngle)); // Lower Angle (4bytes)
-                                                                                          //    stream.Append(BitConverter.GetBytes(firstAngle));  // Upper Angle (4bytes)
-                                                                                          //}
-                                                                                          //else
-                                                                                          //{
-                                                                                          //    stream.Append(BitConverter.GetBytes(firstAngle));  // Lower Angle (4bytes)
-                                                                                          //    stream.Append(BitConverter.GetBytes(secondAngle)); // Upper Angle (4bytes)
-                                                                                          //}
-
             }
             else
             {
@@ -390,6 +368,12 @@ public class Simulator : MonoBehaviour
         return new Pair<Organism, Organism>(new Organism(++lastID, Chromosome1, r), new Organism(++lastID, Chromosome2, r));// Chromosome1, r), new Organism(++lastID, Chromosome2, r));
     }
 
+
+    /// <summary>
+    /// Function assuring that organisms after crossover will be consistent.
+    /// </summary>
+    /// <param name="chromosome">Chromosome</param>
+    /// <returns>Byte array (chromosome code).</returns>
     public byte[] MakeConsistent(byte[] chromosome)
     {
         Chromosome ch1 = new Chromosome(chromosome);
@@ -404,6 +388,11 @@ public class Simulator : MonoBehaviour
         return validFeatures.SelectMany(a => a).ToArray();
     }
 
+    /// <summary>
+    /// Depricated: Function assuring organism consistency.
+    /// </summary>
+    /// <param name="chromosome">Chromosome</param>
+    /// <returns>Chromosome code.</returns>
     public byte[] Reduce(byte[] chromosome)
     {
         Chromosome ch1 = new Chromosome(chromosome);
@@ -522,6 +511,10 @@ public class Simulator : MonoBehaviour
         return x[0];
     }
 
+    /// <summary>
+    /// Function allowing to serialize and save organisms to a file.
+    /// </summary>
+    /// <param name="iteration">Iteration number</param>
     public void SaveOrganisms(int iteration)
     {
         List<Organism> organismList = new List<Organism>();
@@ -536,6 +529,10 @@ public class Simulator : MonoBehaviour
         File.WriteAllText(filePath, jsonString);
     }
 
+    /// <summary>
+    /// Function allowing to load organisms from a file and launch simulation.
+    /// </summary>
+    /// <param name="iteration">Iteration number</param>
     public void LoadOrganisms(int iteration)
     {
         string path = @".\organisms\iteration_" + iteration.ToString() + ".txt";
@@ -550,9 +547,5 @@ public class Simulator : MonoBehaviour
             Vector3 currentPosition = new Vector3((float)cp[0], (float)cp[1], (float)cp[2]);
             Organisms.Add(new Pair<Organism, double>(new Organism(ID, chromosome, currentPosition), 0));
         }
-        //foreach (Pair<Organism, double> o in Organisms)
-        //{
-        //    Console.WriteLine("[" + o.First.ID + "]" + "Movement Ability: (" + o.First.MovementAbility[0].ToString("n3") + ", " + o.First.MovementAbility[1].ToString("n3") + ", " + o.First.MovementAbility[2].ToString("n3") + ")");
-        //}
     }
 }

@@ -52,7 +52,10 @@ public class Run : MonoBehaviour {
     [Tooltip("Maximum possible distance, from last selected node, of the newly generated node.")]
     public int randomScale = 4;
 
-    // Use this for initialization
+    // 
+    /// <summary>
+    /// Initialization Function - runs once at the begining of the program.
+    /// </summary>
     void Start () {
         var sim = gameObject.AddComponent<Simulator>();
         sim.Launch(numberofOrganisms, numberOfIterations, iterationLength, numberOfMutations, minComplexity, maxComplexity, minMotorForce, maxMotorForce, fitnesDeterminationScale, parentProbabilityScale, oldNodeChoiceThreashold, minDistance, hingePosibility, randomScale);

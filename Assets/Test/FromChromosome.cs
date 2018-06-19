@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class generating organism from chromosome to Unity environment.
+/// </summary>
 public class FromChromosome : MonoBehaviour {
 
     private int value = 0;
@@ -13,17 +16,6 @@ public class FromChromosome : MonoBehaviour {
 
     void Start()
     {
-        //var rand = new System.Random();
-        //var chromosome = new Chromosome(Simulator.GenerateChromosome(2, 10, 10, 500, 0.85f, 1, 4, rand));
-        //FromChromosome.Generate(chromosome);
-
-        /* Do the movement:
-           1. Iniciate organism from chormosome
-           2. Run the simulation with given length of Iteration Duration parameter
-           3. Set the CurrentPosition parameter to current position of the organism.
-        */
-        // Mock for testing purposes
-
 
     }
 
@@ -32,7 +24,6 @@ public class FromChromosome : MonoBehaviour {
     {
         if (value >= _iterationLength)
         {
-            //GlobalVariables.Position = GameObject.FindGameObjectsWithTag("Joint")[0].transform.position;
             Destroy();
         }
         value++;
@@ -41,7 +32,7 @@ public class FromChromosome : MonoBehaviour {
 
     public void Generate(Chromosome chromosome, int iterationlength)
     {
-        _iterationLength = iterationlength * 40; // iteration length multiplied by fps - 5
+        _iterationLength = iterationlength * 50;
         features = chromosome.features;
         foreach (var feature in features)
         {
@@ -111,7 +102,9 @@ public class FromChromosome : MonoBehaviour {
         }
         
     }
-
+    /// <summary>
+    /// Function deleting organism from unity simulation environment.
+    /// </summary>
     public void Destroy()
     {
         GlobalVariables.Position = GameObject.FindGameObjectsWithTag("Joint")[0].transform.position;
